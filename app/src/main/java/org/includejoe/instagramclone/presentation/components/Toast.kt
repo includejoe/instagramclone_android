@@ -1,4 +1,4 @@
-package org.includejoe.instagramclone.util
+package org.includejoe.instagramclone.presentation.components
 
 import android.widget.Toast.makeText
 import androidx.compose.runtime.Composable

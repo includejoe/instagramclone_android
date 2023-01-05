@@ -73,7 +73,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
                 .createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
                 operationSuccessful = true
-            }
+            }.await()
             if(operationSuccessful) {
                 val userId = auth.currentUser?.uid!!
                 val obj = User(
@@ -95,5 +95,4 @@ class AuthenticationRepositoryImpl @Inject constructor(
             emit(Response.Error<String>(e.localizedMessage?:"An unexpected error occurred"))
         }
     }
-
 }

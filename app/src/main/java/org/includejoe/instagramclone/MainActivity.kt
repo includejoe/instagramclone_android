@@ -17,6 +17,8 @@ import org.includejoe.instagramclone.presentation.authentication.AuthenticationV
 import org.includejoe.instagramclone.presentation.authentication.LoginScreen
 import org.includejoe.instagramclone.presentation.authentication.SignUpScreen
 import org.includejoe.instagramclone.presentation.main.FeedsScreen
+import org.includejoe.instagramclone.presentation.main.profile.ProfileScreen
+import org.includejoe.instagramclone.presentation.main.SearchScreen
 import org.includejoe.instagramclone.ui.theme.InstagramCloneTheme
 import org.includejoe.instagramclone.util.Screens
 
@@ -47,13 +49,19 @@ fun Navigation(navController: NavHostController, authViewModel: AuthenticationVi
             LoginScreen(navController = navController, viewModel = authViewModel)
         }
         composable(route = Screens.SignUpScreen.route) {
-            SignUpScreen()
+            SignUpScreen(navController = navController, viewModel = authViewModel)
         }
         composable(route = Screens.SplashScreen.route) {
-            SplashScreen(navController = navController, authViewModel = authViewModel)
+            SplashScreen(navController = navController, viewModel = authViewModel)
         }
         composable(route = Screens.FeedsScreen.route) {
-            FeedsScreen()
+            FeedsScreen(navController = navController)
+        }
+        composable(route = Screens.SearchScreen.route) {
+            SearchScreen(navController = navController)
+        }
+        composable(route = Screens.ProfileScreen.route) {
+            ProfileScreen(navController = navController)
         }
     }
 }

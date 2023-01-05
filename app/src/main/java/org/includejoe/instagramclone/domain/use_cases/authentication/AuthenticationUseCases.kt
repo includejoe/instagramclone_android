@@ -1,4 +1,4 @@
-package org.includejoe.instagramclone.domain.use_cases
+package org.includejoe.instagramclone.domain.use_cases.authentication
 
 data class AuthenticationUseCases(
     val isUserAuthenticated: IsUserAuthenticated,

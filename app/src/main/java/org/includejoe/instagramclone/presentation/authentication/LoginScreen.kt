@@ -10,21 +10,20 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import org.includejoe.instagramclone.R
+import org.includejoe.instagramclone.presentation.components.Toast
 import org.includejoe.instagramclone.util.Response
 import org.includejoe.instagramclone.util.Screens
-import org.includejoe.instagramclone.util.Toast
 
 
 @Composable
@@ -36,7 +35,6 @@ fun LoginScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .wrapContentHeight()
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -77,6 +75,34 @@ fun LoginScreen(
             visualTransformation = PasswordVisualTransformation()
         )
 
+        when(val response = viewModel.signInState.value) {
+            is Response.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .size(25.dp),
+                    color = Color.Black
+                )
+            }
+            is Response.Success -> {
+                if(response.data){
+                    LaunchedEffect(key1 = true) {
+                        navController.navigate(Screens.ProfileScreen.route) {
+                            popUpTo(Screens.LoginScreen.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                }
+//                    else {
+//                        Toast(message = "Login failed")
+//                    }
+            }
+            is Response.Error<*> -> {
+                Toast(message=response.message)
+            }
+        }
+
         Button(
             onClick = {
             viewModel.signIn(
@@ -88,29 +114,8 @@ fun LoginScreen(
                 .padding(8.dp)
         ) {
             Text(text="Login")
-            when(val response = viewModel.signInState.value) {
-                is Response.Loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
-                is Response.Success -> {
-                    if(response.data){
-                        navController.navigate(Screens.FeedsScreen.route) {
-                            popUpTo(Screens.LoginScreen.route) {
-                                inclusive = true
-                            }
-                        }
-                    }
-//                    else {
-//                        Toast(message = "Login failed")
-//                    }
-                }
-                is Response.Error<*> -> {
-                    Toast(message=response.message)
-                }
-            }
         }
+
         Text(
             text = "New user? Sign Up ",
             color = Color.Blue,
@@ -122,6 +127,5 @@ fun LoginScreen(
                     }
                 }
         )
-
     }
 }

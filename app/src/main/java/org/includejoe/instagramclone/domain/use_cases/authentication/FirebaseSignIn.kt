@@ -1,14 +1,13 @@
-package org.includejoe.instagramclone.domain.use_cases
+package org.includejoe.instagramclone.domain.use_cases.authentication
 
 import org.includejoe.instagramclone.domain.repository.AuthenticationRepository
 import javax.inject.Inject
 
-class FirebaseSignUp @Inject constructor(
+class FirebaseSignIn @Inject constructor(
     private val repository: AuthenticationRepository
 ) {
     operator fun invoke(
         email: String,
-        password: String,
-        username: String
-    ) = repository.firebaseSignUp(email, password, username)
+        password: String
+    ) = repository.firebaseSignIn(email, password)
 }

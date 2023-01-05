@@ -5,9 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import org.includejoe.instagramclone.domain.use_cases.AuthenticationUseCases
+import org.includejoe.instagramclone.domain.use_cases.authentication.AuthenticationUseCases
 import org.includejoe.instagramclone.util.Response
 import javax.inject.Inject
 
@@ -47,7 +46,7 @@ class AuthenticationViewModel @Inject constructor(
                 password = password,
                 username = username
             ).collect{
-
+                _signUpState.value = it
             }
         }
     }

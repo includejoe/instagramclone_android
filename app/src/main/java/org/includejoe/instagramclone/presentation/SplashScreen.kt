@@ -15,7 +15,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 import org.includejoe.instagramclone.R
 import org.includejoe.instagramclone.presentation.authentication.AuthenticationViewModel
@@ -24,10 +24,10 @@ import org.includejoe.instagramclone.util.Screens
 
 @Composable
 fun SplashScreen(
-    navController: NavController,
-    authViewModel: AuthenticationViewModel
+    navController: NavHostController,
+    viewModel: AuthenticationViewModel
 ) {
-    val authValue = authViewModel.isUserAuthenticated
+    val authValue = viewModel.isUserAuthenticated
     val scale = remember {
         Animatable(0f)
     }
@@ -44,7 +44,7 @@ fun SplashScreen(
         )
         delay(3000)
         if(authValue) {
-            navController.navigate(Screens.FeedsScreen.route) {
+            navController.navigate(Screens.ProfileScreen.route) {
                 popUpTo(Screens.SplashScreen.route) {
                     inclusive = true
                 }

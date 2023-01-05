@@ -9,16 +9,17 @@ import androidx.navigation.NavHostController
 import org.includejoe.instagramclone.presentation.components.BottomNavigationItem
 import org.includejoe.instagramclone.presentation.components.BottomNavigationMenu
 
+
 @Composable
-fun FeedsScreen(
+fun SearchScreen(
     navController: NavHostController
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.weight(1f)) {
-            Text(text = "FEEDS SCREEN")
+            Text(text = "SEARCH SCREEN")
         }
         BottomNavigationMenu(
-            selectedItem = BottomNavigationItem.FEED,
+            selectedItem = BottomNavigationItem.SEARCH,
             navController = navController
         )
     }
