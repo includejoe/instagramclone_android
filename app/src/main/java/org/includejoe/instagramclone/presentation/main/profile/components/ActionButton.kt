@@ -26,7 +26,7 @@ fun ActionButton(
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .border(
                 width = 1.dp,
                 color = Color.LightGray,

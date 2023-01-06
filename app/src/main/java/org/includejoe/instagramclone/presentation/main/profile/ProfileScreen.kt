@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -19,12 +20,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import org.includejoe.instagramclone.R
+import org.includejoe.instagramclone.domain.model.TabModel
 import org.includejoe.instagramclone.presentation.components.BottomNavigationItem
 import org.includejoe.instagramclone.presentation.components.BottomNavigationMenu
+import org.includejoe.instagramclone.presentation.components.Toast
 import org.includejoe.instagramclone.presentation.main.UserViewModel
-import org.includejoe.instagramclone.presentation.main.profile.components.ActionButton
-import org.includejoe.instagramclone.presentation.main.profile.components.ProfileStats
-import org.includejoe.instagramclone.presentation.main.profile.components.RoundedImage
+import org.includejoe.instagramclone.presentation.main.profile.components.*
 import org.includejoe.instagramclone.util.Response
 
 @Composable
@@ -44,7 +45,7 @@ fun ProfileScreen(navController: NavHostController) {
                         TopAppBar(
                             title = {
                                 Text(
-                                    text = obj.name,
+                                    text = obj.username,
                                     fontWeight = FontWeight.Bold,
                                     fontStyle = FontStyle.Italic,
                                     fontSize = 22.sp,
@@ -81,7 +82,8 @@ fun ProfileScreen(navController: NavHostController) {
                                     )
                             ) {
                                 RoundedImage(
-                                    image = rememberImagePainter(data=obj.imageUrl),
+//                                    image = rememberImagePainter(data=obj.imageUrl),
+                                    image = painterResource(id = R.drawable.banner5),
                                     modifier = Modifier
                                         .size(80.dp)
                                         .weight(3.5f)
@@ -98,7 +100,8 @@ fun ProfileScreen(navController: NavHostController) {
                                         navController = navController
                                     )
                                     ProfileStats(
-                                        numberText=obj.followers.size.toString(),
+//                                        numberText=obj.followers.size.toString(),
+                                        numberText="6.6M",
                                         text="Followers",
                                         navController = navController
                                     )
@@ -110,11 +113,11 @@ fun ProfileScreen(navController: NavHostController) {
                                 }
                             }
                         }
-//                        MyProfile(
-//                            displayName=obj.name,
-//                            bio=obj.bio,
-//                            url=obj.url
-//                        )
+                        MyProfile(
+                            displayName=obj.name,
+                            bio=obj.bio,
+                            url=obj.url
+                        )
                         
                         Spacer(modifier = Modifier.height(20.dp))
                         Row(
@@ -123,7 +126,7 @@ fun ProfileScreen(navController: NavHostController) {
                         ) {
                             ActionButton(
                                 text="Edit Profile",
-                                modifier=Modifier
+                                modifier= Modifier
                                     .fillMaxWidth()
                                     .weight(0.45f)
                                     .height(35.dp)
@@ -131,6 +134,53 @@ fun ProfileScreen(navController: NavHostController) {
 
                                     }
                             )
+                        }
+                        Spacer(modifier = Modifier.height(15.dp))
+                        TabView(
+                            tabModels = listOf(
+                                TabModel(
+                                    image = painterResource(id = R.drawable.ic_grid),
+                                    text = "Posts"
+                                ),
+                                TabModel(
+                                        image = painterResource(id = R.drawable.ic_reels),
+                                        text = "Posts"
+                                ),
+                                TabModel(
+                                    image = painterResource(id = R.drawable.ic_igtv),
+                                    text = "Posts"
+                                )
+                            )
+                        ) {
+                            selectedTabIndex = it
+                        }
+                        when(selectedTabIndex) {
+                            0 -> {
+                                PostsSection(
+                                    posts = listOf(
+                                        painterResource(id = R.drawable.banner1),
+                                        painterResource(id = R.drawable.banner2),
+                                        painterResource(id = R.drawable.banner3),
+                                        painterResource(id = R.drawable.banner4),
+                                        painterResource(id = R.drawable.banner5),
+                                        painterResource(id = R.drawable.banner6),
+                                        painterResource(id = R.drawable.banner7),
+                                        painterResource(id = R.drawable.banner8),
+                                        painterResource(id = R.drawable.banner9)
+                                    ),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(5.dp)
+                                )
+                            }
+
+                            1 -> {
+
+                            }
+
+                            2 -> {
+
+                            }
                         }
                     }
                     BottomNavigationMenu(
@@ -142,15 +192,7 @@ fun ProfileScreen(navController: NavHostController) {
             }
         }
         is Response.Error<*> -> {
-
+            Toast(message = response.message)
         }
     }
-    userViewModel.setUserInfo(
-        name = "Eren Yeager",
-        username = "erennn",
-        bio = "let the rumbling begin",
-        url = "https://www.jinarashi.com/",
-    )
-
-
 }

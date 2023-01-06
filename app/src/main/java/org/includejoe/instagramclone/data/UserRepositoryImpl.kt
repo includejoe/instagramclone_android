@@ -47,6 +47,7 @@ class UserRepositoryImpl @Inject constructor(
     ): Flow<Response<Boolean>> = flow {
         operationSuccessful = false
         try {
+            emit(Response.Loading)
             val userObj = mutableMapOf<String, String>()
             userObj["name"] = name
             userObj["username"] = username

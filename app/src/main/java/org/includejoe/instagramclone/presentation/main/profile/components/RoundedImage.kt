@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -20,6 +21,7 @@ fun RoundedImage(
     Image(
         painter = image,
         contentDescription = "profile_image",
+        contentScale = ContentScale.Crop,
         modifier = modifier
             .aspectRatio(1f, matchHeightConstraintsFirst = true)
             .border(
